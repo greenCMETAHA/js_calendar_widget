@@ -306,3 +306,16 @@ function tasksPerDay(list, keyForDay, bNumberOfTasks=false){
 Date.prototype.daysInMonth = function() {
     return 32 - new Date(this.getFullYear(), this.getMonth(), 32).getDate();
 };
+
+
+function getTasks( id, currentDate) {
+    return getTasksPerMonthFromDB(id, currentDate);
+}
+
+function addTask(id, key, task) {
+    return addTaskToDB(id, key, task);
+}
+
+function removeTask(id, key) {
+    return removeTaskFromDB(id, key);
+}

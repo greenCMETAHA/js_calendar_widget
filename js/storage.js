@@ -87,18 +87,3 @@ function saveWidgetText() {
 
     return value;
 }
-
-function getTasks( id, currentDate) {
-    return getTasksPerMonthFromDB(id, currentDate);
-    
-
-}
-
-
-function addTask(id, key, task) {
-    return addTaskToDB(id, key, task);
-}
-
-function removeTask(id, key) {
-    return removeTaskFromDB(id, key);
-}

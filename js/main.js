@@ -10,16 +10,6 @@ divLinks.addEventListener("click",ev => {
     selectPage(ev.target.name);
 });
 
-
-
-
-
-
-
-
-
-
-
 function refreshPage() {
     selectPage("calendar");  //заглушка. Сделать через пути
 }
