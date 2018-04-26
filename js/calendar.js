@@ -13,10 +13,12 @@ Calendar.prototype.show = function() {
     parent.innerHTML=`<div>`+
         `<div class="monthDiv">`+
         `<div class="monthButtonLeft" id="monthButtonLeft_`+this.settings.el+`">`
-            +(this.settings.allowChangeMonth?`<img src="../images/left.png"/>`:``)+`</div>`+
+            +(this.settings.allowChangeMonth?`<img src="https://raw.githubusercontent.com/greenCMETAHA/js_calendar_widget/master/images/left.png"/>`:``)
+        +`</div>`+
         `<div class="monthCenter">`+(this.settings.showMonth?getCurrentMonth(this.settings.date):``)+`</div>`+
         `<div class="monthButtonRight" id="monthButtonRight_`+this.settings.el+`">`
-        +(this.settings.allowChangeMonth?`<img src="../images/right.png"/>`:``)+`</div></div>`+this.getTable(this.settings)+
+        +(this.settings.allowChangeMonth?`<img src="https://raw.githubusercontent.com/greenCMETAHA/js_calendar_widget/master/images/right.png"/>`:``)
+            +`</div></div>`+this.getTable(this.settings)+
         `</div>`;
     console.log(this.settings.el);
    // document.write('<div id=' + settins.el + '>'+settins.el+'</div>');    
@@ -97,7 +99,8 @@ Calendar.prototype.createModalWindowForList = function(id, list, key) {
             if (list.hasOwnProperty(key)) {
                 const element = list[key];
                 result+=`<div>&nbsp;&nbsp; `+element+
-                    ` `+(this.settings.allowRemove?`<img src="../images/remove.png" class="addRemoveImage" id="`+key+`"/>`:``)+`</div>`;
+                    ` `+(this.settings.allowRemove?`<img src="https://raw.githubusercontent.com/greenCMETAHA/js_calendar_widget/master/images/remove.png"`+
+                    ` class="addRemoveImage" id="`+key+`"/>`:``)+`</div>`;
                 
             }
         }
@@ -272,8 +275,10 @@ Calendar.prototype.getTable = function() {
         result+=`<td id="`+this.settings.el+`-`+date.getFullYear()+`-`+date.getMonth()+`-`+dayNumber+`" `
             +(dayNumber===currentDate && date.getMonth()===new Date().getMonth()?` class="td_current"`:``)+`> `+
             `<div><b>`+dayNumber+`</b><div><div>`+tasksPerDay(tasks, key, true)+`</div>`+
-            `<div class="addRemoveButtons">`+(this.settings.allowAdd?`<img src="../images/add.png" id="`+this.settings.el+`_Add_`+key+`" class="addRemoveImage"/>`:``)+
-            (this.settings.allowRemove?`<img src="../images/remove.png"  id="`+this.settings.el+`_Remove_`+key+`"  class="addRemoveImage"/>`:``)+`</div> </td>`;
+            `<div class="addRemoveButtons">`+(this.settings.allowAdd?`<img src="https://raw.githubusercontent.com/greenCMETAHA/js_calendar_widget/master/images/add.png" id="`
+            +this.settings.el+`_Add_`+key+`" class="addRemoveImage"/>`:``)+
+            (this.settings.allowRemove?`<img src="https://raw.githubusercontent.com/greenCMETAHA/js_calendar_widget/master/images/remove.png"  id="`
+                +this.settings.el+`_Remove_`+key+`"  class="addRemoveImage"/>`:``)+`</div> </td>`;
         
         if (i>=7){
             result+=`</tr>`; 
