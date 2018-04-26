@@ -1,10 +1,45 @@
+/** @module db */
+
+/** @constant
+    @type {string}
+    @default
+*/
 const LOCAL_STORAGE_NAME="localStorage_calendar_";
+
+/** @constant
+    @type {string}
+    @default
+*/
 const SETTINGS_NAME="localStorage_settings_Vasilchenko";
+
+/** @constant
+    @type {string}
+    @default
+*/
 const WIDGET_NAME = 'localStorage_baseWidget_Vasilchenko';
 
+/** @constant
+    @type {number}
+    @default
+*/
 const DB_LOCALSTORAGE = 0;
+
+/** @constant
+    @type {number}
+    @default
+*/
 var dbMode = DB_LOCALSTORAGE;
 
+/**
+ * Получаем текст для виджета, если он уже до этого создавался пользователем 
+ *
+ * @name getWidgetTextFromDB
+ * 
+ * @callback 
+ * 
+ * @return {string}  текст для виджета
+ * 
+ */
 function getWidgetTextFromDB () {
     let result = '';
     if (dbMode === DB_LOCALSTORAGE) {
@@ -16,11 +51,29 @@ function getWidgetTextFromDB () {
 }
 
 
+/**
+ * Сохраняем текст виджета в localStorage
+ *
+ * @name saveWidgetTextToDB
+ * @callback 
+ * @param {string} value - текст виджета
+ * 
+ */
 function saveWidgetTextToDB(value) {
     localStorage.setItem(WIDGET_NAME,value);
     
 }
 
+/**
+ * Получаем настройки виджета, если он уже до этого создавался пользователем 
+ *
+ * @name getSettingsJSONFromDB
+ * 
+ * @callback 
+ * 
+ * @return {object}  настройки виджета (хэш)
+ * 
+ */
 function getSettingsJSONFromDB() {
     let result = '';
     if (dbMode === DB_LOCALSTORAGE) {
@@ -45,9 +98,31 @@ function getSettingsJSONFromDB() {
     return result;
 }
 
+/**
+ * Сохраняем настройки виджета в localStorage
+ *
+ * @name saveSettingsToDB
+ * @callback 
+ * @param {object} value - настройки виджета
+ * 
+ */
 function saveSettingsToDB(value) {
     localStorage.setItem(SETTINGS_NAME,JSON.stringify(value));
 }
+
+/**
+ * Получаем список задач за месяц
+ *
+ * @name getTasksPerMonthFromDB
+ * 
+ * @callback 
+ * 
+ * @param {string} id - идентификатор БД
+ * @param {date} currentDate - день в месяце, за который нужно взять выборку 
+ * 
+ * @return {object}  список задач за месяц (хэш)
+ * 
+ */
 
 function getTasksPerMonthFromDB(id, currentDate){
     let result={};
@@ -72,6 +147,20 @@ function getTasksPerMonthFromDB(id, currentDate){
 
 }
 
+/**
+ * Добавить задачу в БД
+ *
+ * @name addTaskToDB
+ * 
+ * @callback 
+ * 
+ * @param {string} id - идентификатор БД
+ * @param {string} key - идентификатор дня в календаре
+ * @param {string} task - собственно, задача, которую надо баписать в БД
+ * 
+ * @return {string}  идентификатор созданной задачи
+ * 
+ */
 function addTaskToDB(id, key, task){
     let result={};
     let obj=localStorage.getItem(LOCAL_STORAGE_NAME+id);
@@ -84,6 +173,20 @@ function addTaskToDB(id, key, task){
 
     return dbKey;
 }
+
+/**
+ * Удалить задачу из БД
+ *
+ * @name removeTaskFromDB
+ * 
+ * @callback 
+ * 
+ * @param {string} id - идентификатор БД
+ * @param {string} dbKey - идентификатор задачи в БД
+  * 
+ * @return {boolean}  успешно ли прошла операция удаления
+ * 
+ */
 
 function removeTaskFromDB(id, dbKey){
     let result=false;

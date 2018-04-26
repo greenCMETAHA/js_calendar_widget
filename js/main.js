@@ -1,3 +1,5 @@
+/** @module main */
+
 const MAIN_CALENDAR_PAGE=0, SETTINGS_PAGE=1, ABOUT_PAGE=2;
 var currentLink=MAIN_CALENDAR_PAGE;
 
@@ -5,6 +7,7 @@ var divLinks=document.getElementById("links");
 var divMain=document.getElementById("main");
 
 refreshPage();
+
 
 divLinks.addEventListener("click",ev => {
     selectPage(ev.target.name);
@@ -15,7 +18,13 @@ function refreshPage() {
 }
 
 
-
+/**
+ * Выводим нужную страницу нашего SPA
+ *
+ * @name selectPage
+ * @param {string} linkName Идентификатор страницы
+ * 
+ */
 function selectPage(linkName){
     switch (linkName) {
         case "calendar":
@@ -35,6 +44,12 @@ function selectPage(linkName){
     return linkName; //for unit-tests
 }
 
+/**
+ * Показать первую страницу, основной календарь с полными настройками 
+ *
+ * @name showMainCalendar
+ * 
+ */
 function showMainCalendar() {
     let result='';
  
@@ -67,28 +82,34 @@ function showMainCalendar() {
     return result;     
 }
 
+/**
+ * Показать первую страницу, основной календарь с полными настройками 
+ *
+ * @name getCalendar
+ * @param {object} settings настройки календаря (хэш): {
+            el : "MainCalendar_00", 
+            showMonth : true,
+            allowChangeMonth : true,
+            allowAdd : true, 
+            allowRemove : true,
+            date: null
+        }
+ * @return {Celendar} Возвращает объект Calendar, созанный с указанными настройками
+ * 
+ */
 function getCalendar(settings) {
     new Calendar(settings);
 };
 
-/*
-function() {
-    var id = "calendar" +  Math.random() ;
-    document.write(`<div id="` + id + `"></div>`);
-    new Calendar({
-        el: `#` + id,
-        showMonth: false,
-        allowChangeMonth: false,
-        allowAdd: false,
-        allowRemove: false,
-        date: null
-    })
-})();
-
-*/
 
 
-
+/**
+ * Созадаём календарь по стройкам виджета
+ *
+ * @name showSettingsCalendar
+ * @return {string} HTML-код календаря
+ * 
+ */
 function showSettingsCalendar() {
     console.log("refresh!");
     let result='';
@@ -111,6 +132,13 @@ function showSettingsCalendar() {
     return result;    
 }
 
+
+/**
+ * Показать текст виджета
+ *
+ * @name showWidgetText
+ * 
+ */
 function showWidgetText() {
     let element=document.getElementById("widget");
     if (element){
@@ -122,6 +150,13 @@ function showWidgetText() {
     
 }
 
+
+/**
+ * Вывести на страницу календарь по стройкам виджета
+ *
+ * @name showTestCalendar
+ * 
+ */
 function showTestCalendar() {
     let element=document.getElementById("testCalendar");
     if (element){
@@ -135,6 +170,16 @@ function showTestCalendar() {
     }  
 }
 
+
+/**
+ * Вывести на страницу информацию о разработчике
+ *
+ * @name showAboutCalendar
+ * 
+ * @return {string} HTML-код календаря
+ * 
+ */
+
 function showAboutCalendar() {
     let result='';
  
@@ -145,6 +190,13 @@ function showAboutCalendar() {
     return result; 
 }
 
+
+/**
+ * Сохраняем все настройки на странице виджета
+ *
+ * @name changeSettings
+ * 
+ */
 function changeSettings() {
     saveSettings();
     saveWidgetText();

@@ -1,6 +1,17 @@
+/** @module storage */
+
 var currentDateForMainCalendar=new Date();
 var currentDateForSettingsCalendar=new Date();
 
+/**
+ * Получаем текст для виджета из БД
+ *
+ * @name getWidgetText
+ * @description Получаем текст для виджета из БД. Если такого пока нет, создаём по шаблону
+ * 
+ * @return {string}  текст для виджета
+ * 
+ */
 function getWidgetText() {
     let result = getWidgetTextFromDB();
 
@@ -29,12 +40,31 @@ function getWidgetText() {
         
 }
 
+/**
+ * Получаем настройки для виджета из БД
+ *
+ * @name getWidgetText
+ * @callback getSettingsJSONFromDB
+ * @description Получаем текст для виджета из БД. Если такого пока нет, создаём по шаблону
+ * 
+ * @return {object}  набор настроек для виджета (хэш)
+ * 
+ */
 function getSettings() {
 
     return getSettingsJSONFromDB();
 }
 
-function setPropertyForSettings(elementName, obj,field) {
+/**
+ * Устанавливаем одну из настроек для виджета
+ *
+ * @name setPropertyForSettings
+ * @param {string} elementName Имя настройки
+ * @param {object} obj объект настроек (хэш)
+ * @param {string} field имя поля настройки в объекте
+ * 
+ */
+function setPropertyForSettings(elementName, obj, field) {
     let el=document.getElementById(elementName);
     if (el){
         obj[field]=el.checked;
@@ -43,6 +73,11 @@ function setPropertyForSettings(elementName, obj,field) {
     }     
 }
 
+/**
+ * Создаём настройки по умолчанию и сохраняем их в БД
+ *
+ * @name saveSettings
+ */
 function saveSettings() {
     result={
         "showMonth" : true,
@@ -59,6 +94,15 @@ function saveSettings() {
     saveSettingsToDB(result);
 }
 
+
+/**
+ * Сохраняем текст виджета
+ *
+ * @name saveWidgetText
+
+ * @return {string} текст виджета
+ * 
+ */
 function saveWidgetText() {
     let value="";
     //let el=document.getElementById("widgetTestTextarea");

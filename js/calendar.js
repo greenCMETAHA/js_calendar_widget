@@ -1,15 +1,32 @@
+/** @module calendar */
 
+/**
+ * @description Объект для отображения календаря
+ * @constructor
+ * @name Calendar
+ * @param {object} settings - Настройки календаря: 
+ * @class 
+ * 
+ */
 function Calendar(settings) {
+    /** @private */
     this.settings=settings;
+
     this.settings.date=settings.date===null? new Date():settings.date;
    //id, showMonth, allowChangeMonth, allowAdd, allowRemove, date
    // let date = !settins.date ? currentDateForMainCalendar : settins.date;
     this.show();
 }
 
+/**
+ * @description Выводит на страницу объект Calendar согласно настройкам settings.
+ * @name show
+ *
+ * @this   {Calendar}
+ * 
+ */
 Calendar.prototype.show = function() {
     let parent=document.getElementById(this.settings.el); //зачем решетка? Уьбрать решетку, если не сработает
-    parent.innerHTML="YES!!! "+this.settings.el+"<hr />";
     parent.innerHTML=`<div>`+
         `<div class="monthDiv">`+
         `<div class="monthButtonLeft" id="monthButtonLeft_`+this.settings.el+`">`
@@ -20,10 +37,6 @@ Calendar.prototype.show = function() {
         +(this.settings.allowChangeMonth?`<img src="https://raw.githubusercontent.com/greenCMETAHA/js_calendar_widget/master/images/right.png"/>`:``)
             +`</div></div>`+this.getTable(this.settings)+
         `</div>`;
-    console.log(this.settings.el);
-   // document.write('<div id=' + settins.el + '>'+settins.el+'</div>');    
-
-    //debugger;
 
     let divButtonLeft= document.getElementById("monthButtonLeft_"+this.settings.el);
     if (this.settings.allowChangeMonth && divButtonLeft){
@@ -44,11 +57,17 @@ Calendar.prototype.show = function() {
         this.onClickTd(el.target);
 
     });
-    
 }
 
 
-
+/**
+ * @description Обрабатывает нажатие на день календаря.
+ * @name onClickTd
+ *
+ * @this   {Calendar}
+ * @param {object} target - ссылка на нажатый элемент формы, день календаря 
+ * 
+ */
 Calendar.prototype.onClickTd = function(target) {
     const LIST_MODE=1, ADD_MODE=2, REMOVE_MODE=3;
     let mode=LIST_MODE;
@@ -84,6 +103,16 @@ Calendar.prototype.onClickTd = function(target) {
     
 }
 
+/**
+ * @description Выводит на экран модальное окно для списка
+ * @name createModalWindowForList
+ *
+ * @this   {Calendar}
+ * @param {string} id - идентификатор базы, с которой работает календарь: 
+ * @param {object} list - список задач на день, полученный из БД: 
+ * @param {string} key - идентификатор дня в календаре 
+ * 
+ */
 Calendar.prototype.createModalWindowForList = function(id, list, key) {
     let modalDiv=document.getElementById("modalWindowForCalendar");
     if (!modalDiv){
@@ -127,6 +156,15 @@ Calendar.prototype.createModalWindowForList = function(id, list, key) {
     
 }
 
+/**
+ * @description Удаляет задачу из БД и обновляет страницу
+ * @name removeTask
+ *
+ * @this   {Calendar}
+ * @param {string} id - идентификатор базы, с которой работает календарь: 
+ * @param {string} key - идентификатор задачи в БД: 
+ * 
+ */
 Calendar.prototype.removeTask = function(id, key) {
     removeTask(id, key);
     this.closeModal();
@@ -134,10 +172,27 @@ Calendar.prototype.removeTask = function(id, key) {
 }
 
 
+/**
+ * @description Выводит на экран модальное окно добавления задачи
+ * @name openPromptForAddTask
+ *
+ * @this   {Calendar}
+ * @param {string} id - идентификатор базы, с которой работает календарь: 
+ * @param {string} key - идентификатор дня в календаре: 
+ * 
+ */
+
 Calendar.prototype.openPromptForAddTask = function(id, key) {
     this.createModalWindowForAdd(id, key);
 }
 
+/**
+ * @description Закрывает модальное окно (для вывода списка, или для добавления задачи)
+ * @name closeModal
+ *
+ * @this   {Calendar}
+ * 
+ */
 Calendar.prototype.closeModal = function() {
     let modalDiv=document.getElementById("modalWindowForCalendar");   
     if (modalDiv){
@@ -145,6 +200,15 @@ Calendar.prototype.closeModal = function() {
     }
 }
 
+/**
+ * @description Создаёт модальное окно для добавления новой задачи
+ * @name createModalWindowForAdd
+ *
+ * @this   {Calendar}
+ * @param {string} id - идентификатор базы, с которой работает календарь: 
+ * @param {string} key - идентификатор дня в календаре: 
+ * 
+ */
 Calendar.prototype.createModalWindowForAdd = function(id, key) {
     let modalDiv=document.getElementById("modalWindowForCalendar");
     if (!modalDiv){
@@ -172,6 +236,15 @@ Calendar.prototype.createModalWindowForAdd = function(id, key) {
     
 }
 
+/**
+ * @description Сохраняет новую задачу в БД
+ * @name saveNewTask
+ *
+ * @this   {Calendar}
+ * @param {string} id - идентификатор базы, с которой работает календарь: 
+ * @param {string} key - идентификатор дня в календаре: 
+ * 
+ */
 Calendar.prototype.saveNewTask = function(id, key) {
     let el=document.getElementById("newTask");
     addTask(id, key, el.value);
@@ -179,7 +252,14 @@ Calendar.prototype.saveNewTask = function(id, key) {
     this.show();
 }
 
-
+/**
+ * @description Изменяет текущий месяц в кадендаре на странице
+ * @name changeMonth
+ *
+ * @this   {Calendar}
+ * @param {number} value - смещение месяца: 1 - на месяц вперед, -1 - на месяц назад 
+ * 
+ */
 Calendar.prototype.changeMonth = function(value) {
     let date=this.settings.date;
     if (value === 1){
@@ -201,6 +281,13 @@ Calendar.prototype.changeMonth = function(value) {
     
 }
 
+/**
+ * @description Возвращает наименование месяца на русском 
+ * @name getCurrentMonth
+ *
+ * @param {date} date - дата в месяце, который будем выводить на экран 
+ * @return {string} Наименование месяца на русском.
+ */
 function getCurrentMonth(date) {
     let result="< / >";
     if (date){
@@ -251,6 +338,15 @@ function getCurrentMonth(date) {
     return result;
 }
 
+/**
+ * Создаёт таблицу дней месяца по неделям для вывода на страницу
+ * @description Создаёт таблицу дней месяца по неделям для вывода на страницу
+ * @name getTable
+ *
+ * @this   {Calendar}
+ * @return {string} html-код таблицы дней за месяц
+  * 
+ */
 Calendar.prototype.getTable = function() {
     let result=`<table id="`+this.settings.el+`Table">`+
         `<tr><th>Пн.</th><th>Вт.</th><th>Ср.</th><th>Чт.</th><th>Пт.</th><th>Сб.</th><th>Вс.</th></tr>`+
@@ -299,6 +395,17 @@ Calendar.prototype.getTable = function() {
     return result;
 }
 
+/**
+ * @description Возвращает список задач за день, либо их количество
+ * @name tasksPerDay
+ *
+ * @param {object} list - список задач за месяц, полученный из БД 
+ * @param {string} keyForDay - идентификатор дня в месяце в формате "год-месяц-день" 
+ * @param {boolean} bNumberOfTasks - формат вывода: true - выводим количество задач, false - возвращаем список задач (для list)
+ * 
+ * @returns {(string|object)} либо строку с количеством задач за день, либо список задач (хэш)
+ * 
+ */
 function tasksPerDay(list, keyForDay, bNumberOfTasks=false){
     let result={};
 
@@ -313,19 +420,61 @@ function tasksPerDay(list, keyForDay, bNumberOfTasks=false){
     return bNumberOfTasks? (resultLength===0?"&nbsp;&nbsp;&nbsp;&nbsp; ": "Задач:"+ resultLength): result;
 }
 
+/**
+ * @description Функция для получения дней в месяце
+ * @name daysInMonth
+ * 
+ * @return {number}  количество дней в месяце
+ * 
+ */
+
 Date.prototype.daysInMonth = function() {
     return 32 - new Date(this.getFullYear(), this.getMonth(), 32).getDate();
 };
 
 
+/**
+ * @description Возвращает список задач за месяц
+ * @name getTasks
+ *
+ * @param {string} id - идентификатор базы, с которой работает календарь: 
+ * @param {date} currentDate - дата в месяце, за который хотим получить выборку 
+  * 
+ * @return {object}  список задач за месяц (хэш)
+ * 
+ */
 function getTasks( id, currentDate) {
     return getTasksPerMonthFromDB(id, currentDate);
 }
+
+
+/**
+ * @description Добавляем задачу в БД
+ * @name addTask
+ *
+ * @param {string} id - идентификатор базы, с которой работает календарь: 
+ * @param {string} key - идентификатор дня, в который будет записана задача 
+ * @param {string} task - собственно, описание задачи
+ * 
+ * @return {string}  идентификатор задачи в БД
+ * 
+ */
 
 function addTask(id, key, task) {
     return addTaskToDB(id, key, task);
 }
 
+/**
+ * @description Удаляем задачу из БД
+ * @name removeTask
+ *
+ * @param {string} id - идентификатор базы, с которой работает календарь: 
+ * @param {string} key - идентификатор задачи 
+ * @param {string} task - собственно, описание задачи
+ * 
+ * @return {boolean}  была ли найдена и удалена задача
+ * 
+ */
 function removeTask(id, key) {
     return removeTaskFromDB(id, key);
 }
