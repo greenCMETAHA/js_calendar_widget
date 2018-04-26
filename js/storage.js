@@ -6,7 +6,8 @@ function getWidgetText() {
 
 
     if (!result || result === '' || result === 'undefined') {
-        result = '<script scr="..."></script>\n' +
+        result = '<script scr="https://rawgit.com/greenCMETAHA/js_calendar_widget/master/js/db.js"></script>\n' +
+            '<script scr="https://rawgit.com/greenCMETAHA/js_calendar_widget/master/js/calendar.js"></script>\n' +
             '<script>\n' +
             '  (function() {\n' +
             '      var id = "calendar" +  Math.random() ;\n' +
@@ -64,21 +65,22 @@ function saveWidgetText() {
     //if (el){
         //let value=el.text;
         let settings=getSettings();
-        value = '<script scr="..."></script>\n' +
-        '<script>\n' +
-        '  (function() {\n' +
-        '      var id = "calendar" +  Math.random() ;\n' +
-        '      document.write(`<div id="` + id + `"></div>`);\n' +
-        '      new Calendar({\n' +
-        '          el: `#` + id,\n' +
-        '          showMonth: '+settings.showMonth+',\n' +
-        '          allowChangeMonth: '+settings.allowChangeMonth+',\n' +          
-        '          allowAdd: '+settings.allowAdd+',\n' +
-        '          allowRemove: '+settings.allowRemove+',\n' +
-        '          date: null\n'  +
-        '      })\n' +
-        '  })();\n' +
-        '</script>\n';
+        value = '<script scr="https://rawgit.com/greenCMETAHA/js_calendar_widget/master/js/db.js"></script>\n' +
+            '<script scr="https://rawgit.com/greenCMETAHA/js_calendar_widget/master/js/calendar.js"></script>\n' +
+            '<script>\n' +
+            '  (function() {\n' +
+            '      var id = "calendar" +  Math.random() ;\n' +
+            '      document.write(`<div id="` + id + `"></div>`);\n' +
+            '      new Calendar({\n' +
+            '          el: `#` + id,\n' +
+            '          showMonth: '+settings.showMonth+',\n' +
+            '          allowChangeMonth: '+settings.allowChangeMonth+',\n' +          
+            '          allowAdd: '+settings.allowAdd+',\n' +
+            '          allowRemove: '+settings.allowRemove+',\n' +
+            '          date: null\n'  +
+            '      })\n' +
+            '  })();\n' +
+            '</script>\n';
 
 
         saveWidgetTextToDB(value);

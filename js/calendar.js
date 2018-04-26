@@ -1,6 +1,7 @@
 
 function Calendar(settings) {
     this.settings=settings;
+    this.settings.date=settings.date===null? new Date():settings.date;
    //id, showMonth, allowChangeMonth, allowAdd, allowRemove, date
    // let date = !settins.date ? currentDateForMainCalendar : settins.date;
     this.show();
@@ -88,12 +89,14 @@ Calendar.prototype.createModalWindowForList = function(id, list, key) {
         modalDiv.setAttribute("id", "modalWindowForCalendar");
         modalDiv.setAttribute("class", "modal");
         document.body.appendChild(modalDiv);
+    }else{
+        modalDiv.setAttribute("class", "modal");
     }
     let result=`<div id="list">`;
         for (const key in list) {
             if (list.hasOwnProperty(key)) {
                 const element = list[key];
-                result+=`<div>`+element+
+                result+=`<div>&nbsp;&nbsp; `+element+
                     ` `+(this.settings.allowRemove?`<img src="../images/remove.png" class="addRemoveImage" id="`+key+`"/>`:``)+`</div>`;
                 
             }
@@ -144,8 +147,10 @@ Calendar.prototype.createModalWindowForAdd = function(id, key) {
     if (!modalDiv){
         modalDiv=document.createElement("div");
         modalDiv.setAttribute("id", "modalWindowForCalendar");
-        modalDiv.setAttribute("class", "modal");
+        modalDiv.setAttribute("class", "add");
         document.body.appendChild(modalDiv);
+    }else{
+        modalDiv.setAttribute("class", "add");
     }
     let result=`<p><input id="newTask"><br /><div id="buttons">`+
     `<input type="button" id="buttonSaveNewTask" value="Сохранить" />`+
