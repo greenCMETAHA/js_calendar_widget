@@ -1,0 +1,147 @@
+#mainCalendar{
+    margin: auto;
+    width: 500px;
+    height: 450px;
+    border-style: solid;
+    border-color: black;
+    border-width: 3px;
+}
+
+#settings{
+    margin: auto;
+    width: 500px;
+    height: 300px;
+    border-style: solid;
+    border-color: black;
+    border-width: 3px;    
+}
+
+#widgetTest{
+    margin-top: 5px;
+    width: 100%;
+    height: 100%;    
+
+}
+
+#widget, #testCalendar{
+    width: 48%;
+    height: 450px;
+    border-style: solid;
+    border-color: black;
+    border-width: 3px;  
+    align-items: center;
+}
+
+#widget{
+    margin-left: 5px;
+    float: left;
+}
+
+#testCalendar{
+    margin-right: 5px;
+    float:right;  
+    
+}
+
+textarea {
+    width: 98%;
+    height:98%;
+}
+
+.monthDiv, .monthButtonLeft, .monthButtonRight, .monthCenter{
+    background-color:lightgrey;
+    text-align: center;
+    -webkit-flex: 1;
+    flex: 1;    
+}
+
+.monthDiv{
+    display:flex;
+}
+
+.monthButtonLeft, .monthButtonRight{
+    height: 30px;
+    width: 30px;
+
+}
+
+.monthButtonLeft {
+    margin-left: 1px;
+}
+
+.monthButtonRight{
+    margin-right:  1px;
+
+}
+
+.monthCenter{
+
+}
+
+
+th{
+    text-align: center;
+    height: 20px;
+    background-color: gainsboro;
+    padding: 0px;     
+}
+
+td, .td_current{
+    height: 55px;
+    border-style: solid;
+    border-color: gainsboro;
+    border-width: 1px;
+    vertical-align: top;    
+}
+
+.td_current{
+    height: 55px;
+    background-color: gainsboro;
+}
+
+table{
+    width: 100%;
+    height: 100%;
+}
+
+.addRemoveButtons{
+    text-align: right;
+}
+
+.addRemoveImage{
+    width: 20px;
+    height: 20px;
+}
+
+.modal{
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    overflow: auto;
+    background-color: lightgreen;
+   
+}
+
+.list{
+    margin: 15% auto;
+    background-color: green;
+    padding: 20px;
+    border: 1px solid black;
+    width: 80%;
+}
+
+.close{
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+
+}
+
+.buttons{
+    height: 50px;
+    right: 3px;
+}
